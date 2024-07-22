@@ -11,14 +11,20 @@ const pageController = require('./controllers/pageController');
 const app = express();
 
 // Connect to DB
-mongoose.connect(
-  'mongodb+srv://erennn:4vbXKCKWO6zEjNOD@cluster0.fpzprnt.mongodb.net/?retryWrites=true&w=majority&deneme=Cluster0',
-
-  {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-  }
-);
+mongoose
+  .connect(
+    'mongodb+srv://dzeko:wuweEKw6j6VPOAwQ@cluster2.w1tfdub.mongodb.net/?retryWrites=true&w=majority&appName=Cluster2',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    }
+  )
+  .then(() => {
+    console.log('DB CONNECTED');
+  })
+  .catch((err) => {
+    console.log(err);
+  });
 
 // Template Engine
 app.set('view engine', 'ejs');
@@ -50,7 +56,7 @@ app.get('/add', pageController.getAddPage);
 
 app.get('/photos/edit/:id', pageController.getEditPage);
 
-const port = 3000;
+const port = process.env.PORT || 5000;
 app.listen(port, () => {
   console.log(`Server is running on port ${port}...`);
 });
